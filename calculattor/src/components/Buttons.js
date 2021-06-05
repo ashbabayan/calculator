@@ -5,12 +5,12 @@ let result = 0;
 let finalResult;
 
 const Buttons = () => { 
-    const [value, setValue] = useState('');
+    const [firstValue, setFirstValue] = useState('');
     const [mathAction, setMathAction] = useState ('');
     const [secondValue, setSecondValue] = useState('');
     const [clicked, setClicked] = useState(true);
     const addToInput = (e) => {         
-        !mathAction ? setValue(value + e.target.innerHTML) : setSecondValue(secondValue + e.target.innerHTML)   
+        !mathAction ? setFirstValue(firstValue + e.target.innerHTML) : setSecondValue(secondValue + e.target.innerHTML)   
     }
 
     const selectAction = (e) => {
@@ -18,24 +18,24 @@ const Buttons = () => {
     }
 
     const clearInputs = () => {
-        setValue("");
+        setFirstValue("");
         setMathAction("");
         setSecondValue("");
         finalResult = '';
     }
 
-    const sum = (value, secondValue, mathAction)=>{  
+    const sum = (firstValue, secondValue, mathAction)=>{  
         if(mathAction === '+'){        
-            result = Number(value) + Number(secondValue);
+            result = Number(firstValue) + Number(secondValue);
             return result
         } else if(mathAction === '-'){
-            result = Number(value) - Number(secondValue);
+            result = Number(firstValue) - Number(secondValue);
             return result
         } else if(mathAction === '*'){
-            result = Number(value) * Number(secondValue);
+            result = Number(firstValue) * Number(secondValue);
             return result
         } else if(mathAction === '/'){
-            result = Number(value) / Number(secondValue);
+            result = Number(firstValue) / Number(secondValue);
             return result
         }
         console.log(finalResult)
@@ -46,12 +46,12 @@ const Buttons = () => {
     }
     
     useEffect(() => {
-       finalResult =  sum(value, secondValue, mathAction)
+       finalResult =  sum(firstValue, secondValue, mathAction)
     },[clicked])
        
     return (       
         <div className="buttons_container"  >
-          <InputScreen value={value} mathAction={mathAction} secondValue={secondValue} finalResult={finalResult}/>            
+          <InputScreen value={firstValue} mathAction={mathAction} secondValue={secondValue} finalResult={finalResult}/>            
             <div className="actions_container" >
                 <div className="numbers" onClick={addToInput}>
                     <button>1</button>
@@ -64,7 +64,7 @@ const Buttons = () => {
                     <button>8</button>
                     <button>9</button>
                     <button>0</button>
-                    <button>,</button>
+                    <button>.</button>
                 </div>
                 <button className="delete" onClick={clearInputs}>del</button>
                 <div className="actions" onClick={selectAction}>
