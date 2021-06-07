@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import InputScreen from './InputScreen';
 
 let result = 0;
@@ -10,11 +10,14 @@ const Buttons = () => {
     const [secondValue, setSecondValue] = useState('');
     const [clicked, setClicked] = useState(true);
     const addToInput = (e) => {         
-        !mathAction ? setFirstValue(firstValue + e.target.innerHTML) : setSecondValue(secondValue + e.target.innerHTML)   
+        !mathAction && !finalResult ? setFirstValue(firstValue + e.target.innerHTML) : setSecondValue(secondValue + e.target.innerHTML)
+        console.log(finalResult)
     }
 
     const selectAction = (e) => {
-        setMathAction(e.target.innerHTML )
+        if(!mathAction) {
+            setMathAction(e.target.innerHTML )
+        }
     }
 
     const clearInputs = () => {
@@ -43,15 +46,14 @@ const Buttons = () => {
 
     const checkClick = () => {
        setClicked(!clicked)
+       if(!finalResult){
+           finalResult =  sum(firstValue, secondValue, mathAction)
+        }
     }
-    
-    useEffect(() => {
-       finalResult =  sum(firstValue, secondValue, mathAction)
-    },[clicked])
        
     return (       
         <div className="buttons_container"  >
-          <InputScreen value={firstValue} mathAction={mathAction} secondValue={secondValue} finalResult={finalResult}/>            
+          <InputScreen firstValue={firstValue} mathAction={mathAction} secondValue={secondValue} finalResult={finalResult}/>            
             <div className="actions_container" >
                 <div className="numbers" onClick={addToInput}>
                     <button>1</button>
